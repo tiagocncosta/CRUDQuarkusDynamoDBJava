@@ -39,8 +39,13 @@ public abstract class AbstractService {
 
 
     protected PutItemRequest putRequest(Employee employee) {
+
         List<AttributeValue> locationHistory = new ArrayList<>();
-        locationHistory.add(AttributeValue.fromS(employee.historyLocation().get(0)));
+        for (int i = 0; i < employee.historyLocation().size() ; i++) {
+            locationHistory.add(AttributeValue.fromS(employee.historyLocation().get(i)));
+        }
+
+
         // o JSON tem de ter todos os campos preenchidos menos os GSI's porque recebem os valores de outros campos
         Map<String, AttributeValue> item = new HashMap<>();
         item.put(PK_COL, AttributeValue.builder().s("#" + employee.PK()).build());
